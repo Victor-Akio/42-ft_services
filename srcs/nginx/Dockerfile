@@ -13,6 +13,6 @@ COPY ssl/server.crt /etc/nginx/ssl/
 COPY ssl/server.key /etc/nginx/ssl/
 COPY nginx_start.sh .
 
-EXPOSE 80 443
+EXPOSE 80 443 22
 
 ENTRYPOINT ["sh", "nginx_start.sh"]
