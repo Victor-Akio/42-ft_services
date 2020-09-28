@@ -16,20 +16,21 @@ minikube addons enable dashboard
 minikube addons enable metallb
 
 echo -e "Loading MetalLB ..."
-kubectl apply -f ./metallb.yaml #> /dev/null
+kubectl apply -f ./srcs/metallb.yaml #> /dev/null
 
 echo -e "Preparing Pods ..."
 eval $(minikube docker-env)
-docker build srcs/nginx -t nginx_services > /dev/null
-#docker build srcs/nginx/ssh -t ssh_services
-#docker build srcs/ftps -t ftps_services
-#docker build srcs/mysql -t mysql_services
-#docker build srcs/wordpress -t wordpress_services
-#docker build srcs/phpmyadmin -t phpmyadmin_services
-#docker build srcs/php -t php_services
-#docker build srcs/grafana -t grafana_services
-#docker build srcs/influxdb -t influxdb_services
-#docker build srcs/telegraf -t telegraf_services
+docker build srcs/nginx -t nginx-services > /dev/null
+docker build srcs/ftps -t ftps-services > /dev/null
+#docker build srcs/mysql -t mysql-services > /dev/null
+docker build srcs/wordpress -t wordpress-services > /dev/null
+#docker build srcs/phpmyadmin -t phpmyadmin-services > /dev/null
+#docker build srcs/php -t php-services > /dev/null
+#docker build srcs/grafana -t grafana-services > /dev/null
+#docker build srcs/influxdb -t influxdb-services > /dev/null
+#docker build srcs/telegraf -t telegraf-services > /dev/null
 
-echo -e "Configure Minicube ..."
+echo -e "Configure Minikube ..."
 kubectl apply -f ./srcs/nginx/nginx.yaml > /dev/null
+kubectl apply -f ./srcs/ftps/ftps.yaml > /dev/null
+kubectl apply -f ./srcs/wordpress/wp.yaml > /dev/null

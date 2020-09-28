@@ -5,10 +5,7 @@ LABEL maintainer="vminomiy <vminomiy@student.42sp.org.br>" \
 
 RUN apk update && \
     apk add mysql && \
-    mkdir /run/mysqld
 
-COPY config.sql .
-COPY mdb_start.sh .
 
 EXPOSE 3306
 

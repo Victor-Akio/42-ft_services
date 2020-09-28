@@ -10,7 +10,8 @@ RUN apk update && \
     adduser -D $USER && \
 	passwd -d $USER && \
     mkdir /home/$USER/ftp && \
-    chown $USER /home/$USER/ftp && chmod 757 /home/$USER/ftp
+    chown $USER /home/$USER/ftp && \
+    chmod 757 /home/$USER/ftp
 
 COPY ftp.txt /home/$USER/ftp/ 
 COPY ssl/server.crt /etc/ssl/

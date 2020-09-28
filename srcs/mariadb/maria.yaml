@@ -44,6 +44,15 @@ spec:
             containers:
             - image: mysql-services
               name: mysql
+              env:
+              - name: MYSQL_ROOT_PASSWORD
+                value: "1234"
+              - name: MYSQL_PASSWORD
+                value: "1234"
+              - name: MYSQL_USER
+                value: "wordpress"
+              - name: MYSQL_DATABASE
+                value: "wordpress"
               ports:
               - containerPort: 3306
               volumeMounts:
