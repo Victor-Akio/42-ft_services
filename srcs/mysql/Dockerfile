@@ -1,15 +1,15 @@
 FROM alpine:3.12
 
+LABEL maintainer="vminomiy <vminomiy@student.42sp.org.br>" \
+      version="1.0.0"
+
 RUN apk update && \
-	apk add mysql mysql-client && \
-	addgroup mysql mysql && \
-	rm -rf /var/cache/apk/*
+	apk add mysql && \
+    mkdir /run/mysqld
 
-COPY ./start.sh /bin/start.sh
-COPY ./mysql.cnf /etc/mysql/mysql.cnf
-
-VOLUME ["/var/lib/mysql"]
+COPY config.sql .
+COPY start.sh .
 
 EXPOSE 3306
 
-ENTRYPOINT ["/bin/start.sh"]
+ENTRYPOINT ["sh", "start.sh"]

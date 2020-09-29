@@ -8,6 +8,7 @@ This project was made with the following tools:
 
 Useful links:
 
+- Minikube - https://kubernetes.io/docs/tasks/tools/install-minikube/
 - Alpine-nginx OS - https://wiki.alpinelinux.org/wiki/Nginx
 - SSHD_config - https://linux.die.net/man/5/sshd_config
 - Yaml - https://medium.com/@akio.miyake/introdu%C3%A7%C3%A3o-b%C3%A1sica-ao-yaml-para-ansiosos-2ac4f91a4443
