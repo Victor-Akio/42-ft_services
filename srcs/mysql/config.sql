@@ -4,4 +4,4 @@ DROP DATABASE IF EXISTS test;
 DELETE FROM mysql.db WHERE Db='test' or Db='test\\_%';
 CREATE DATABASE wordpress;
 GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'%' IDENTIFIED BY 'admin';
-GRANT ALL PRIVILEGES ON *.* TO 'pma'@'%' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' IDENTIFIED BY 'admin';
