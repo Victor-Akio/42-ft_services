@@ -11,7 +11,8 @@ RUN apk update && \
 	passwd -d $USER && \
     mkdir /home/$USER/ftp && \
     chown $USER /home/$USER/ftp && \
-    chmod 757 /home/$USER/ftp
+    chmod 757 /home/$USER/ftp && \
+    apk add --no-cache --upgrade bash
 
 COPY ftp.txt /home/$USER/ftp/ 
 COPY ssl/server.crt /etc/ssl/

@@ -1,10 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-mkdir -p /var/run/nginx
+adduser -D "$SSH_USER"
+echo "$SSH_USER:$SSH_PASSWORD" | chpasswd
 
-ssh-keygen -A
-adduser --disabled-password ${SSH_USERNAME}
-echo "${SSH_USERNAME}:${SSH_PASSWORD}" | chpasswd
 /usr/sbin/sshd
-
-nginx -g "daemon off;"
+/usr/sbin/nginx -g 'daemon off;'

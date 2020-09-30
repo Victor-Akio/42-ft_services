@@ -1,0 +1,7 @@
+
+Port 22
+HostKey /etc/ssh/ssh_host_rsa_key
+PermitRootLogin yes
+PasswordAuthentication yes
+PermitEmptyPasswords yes
+Subsystem	sftp	/usr/lib/ssh/sftp-server
