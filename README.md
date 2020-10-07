@@ -15,3 +15,4 @@ Useful links:
 - phpmyadmin - https://wiki.alpinelinux.org/wiki/PhpMyAdmin
 - lighttpd and fastcgi - https://wiki.archlinux.org/index.php/Lighttpd
 - Grafana - https://opeservices.com.br/grafana
+- Metallb - https://medium.com/@shoaib_masood/metallb-network-loadbalancer-minikube-335d846dfdbe

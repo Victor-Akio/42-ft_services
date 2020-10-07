@@ -6,7 +6,7 @@ metadata:
 data:
   config: |
     address-pools:
-    - name: default
+    - name: custom-ip-pool
       protocol: layer2
       addresses:
-      - 192.168.1.240-.13.168.1.250
+      - 192.168.99.100-192.168.99.255

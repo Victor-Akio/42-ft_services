@@ -1,8 +1,5 @@
 FROM alpine:3.12
 
-LABEL maintainer="vminomiy <vminomiy@student.42sp.org.br>" \
-      version="1.0.0"
-
 ENV PATH=/grafana-7.1.3/bin:$PATH
 
 RUN apk update && \
@@ -14,9 +11,9 @@ RUN apk update && \
 
 WORKDIR /grafana-7.1.3
 
-COPY config/dashboard.json /var/lib/grafana/dashboards/
-COPY config/influxdb.yaml conf/provisioning/datasources/
-COPY config/dashboard.yaml conf/provisioning/dashboards/
+# COPY dashboard.json /var/lib/grafana/dashboards/
+# COPY influxdb.yaml /conf/provisioning/datasources/
+# COPY dashboard.yaml /conf/provisioning/dashboards/
 
 EXPOSE 3000
 
