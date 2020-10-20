@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ftp-config
+  name: ftps-config
 data:
   vsftpd.conf: |
     anonymous_enable=NO
@@ -24,63 +24,59 @@ data:
     ssl_ciphers=HIGH
     pasv_enable=YES
     pasv_promiscuous=YES
-    pasv_address=172.17.0.10
-    pasv_min_port=10000
-    pasv_max_port=10000
-    rsa_cert_file=/etc/ssl/server.crt
-    rsa_private_key_file=/etc/ssl/server.key
+    pasv_address=192.168.49.3
+    pasv_min_port=30000
+    pasv_max_port=30000
+    rsa_cert_file=/etc/ssl/certs/vsftpd.crt
+    rsa_private_key_file=/etc/ssl/private/vsftpd.key
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ftp
+  name: ftps
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: ftp
+      app: ftps
   template:
     metadata:
-      name: ftp
+      name: ftps
       labels:
-        app: ftp
+        app: ftps
     spec:
       containers:
-      - name: ftp
+      - name: ftps
         image: ftps-services
         imagePullPolicy: Never
         ports:
-        - name: ftp-data
+        - name: ftps-data
           containerPort: 20
-        - name: ftp-connection
+        - name: ftps-connection
           containerPort: 21
         - name: passv-mode
-          containerPort: 10000
+          containerPort: 30000
         volumeMounts:
-        - name: ftp-config
+        - name: ftps-config
           mountPath: /etc/vsftpd/
       volumes:
-        - name: ftp-config
+        - name: ftps-config
           configMap:
-            name: ftp-config
+            name: ftps-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
   annotations:
     metallb.universe.tf/allow-shared-ip: shared
-  name: ftp
+  name: ftps
 spec:
   ports:
-  - name: ftp-data
+  - name: ftps-data
     port: 20
-    targetPort: 20
-  - name: ftp-connection
+  - name: ftps-connection
     port: 21
-    targetPort: 21
   - name: passv-mode
-    port: 10000
-    targetPort: 10000 
+    port: 30000
   selector:
-    app: ftp
+    app: ftps
   type: LoadBalancer

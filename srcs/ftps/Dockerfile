@@ -3,21 +3,12 @@ FROM alpine:3.12
 LABEL maintainer="vminomiy <vminomiy@student.42sp.org.br>" \
       version="1.0.0"
 
-ENV USER vminomiy
+RUN apk upgrade && \
+    apk add openssl vsftpd
 
-RUN apk update && \
-	apk add vsftpd && \
-    adduser -D $USER && \
-	passwd -d $USER && \
-    mkdir /home/$USER/ftp && \
-    chown $USER /home/$USER/ftp && \
-    chmod 757 /home/$USER/ftp && \
-    apk add --no-cache --upgrade bash
-
-COPY ftp.txt /home/$USER/ftp/ 
-COPY ssl/server.crt /etc/ssl/
-COPY ssl/server.key /etc/ssl/
+COPY setup.sh /tmp/
+RUN chmod +x /tmp/setup.sh
 
 EXPOSE 20 21 10000
 
-ENTRYPOINT ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
+ENTRYPOINT ["/tmp/setup.sh"]
