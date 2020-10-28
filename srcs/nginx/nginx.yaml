@@ -57,4 +57,4 @@ spec:
         - name: SSH_USER
           value: admin
         - name: SSH_PASSWORD
-          value: admin
+          value: admim

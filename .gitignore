@@ -1,3 +1,5 @@
+reset_nginx.sh
+
 # Prerequisites
 *.d
 

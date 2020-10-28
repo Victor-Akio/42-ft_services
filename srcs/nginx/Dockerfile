@@ -20,7 +20,6 @@ COPY sshd_config /etc/ssh/
 
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-COPY ./proxy.conf /etc/nginx/conf.d/proxy.conf
 
 COPY ./setup.sh .
 RUN chmod +x ./setup.sh

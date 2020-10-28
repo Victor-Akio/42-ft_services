@@ -3,7 +3,7 @@
 
 This project was made with the following tools:
 
-- Minikube v1.9.0
+- Minikube v1.13.0
 
 
 Useful links:
@@ -17,3 +17,4 @@ Useful links:
 - Grafana - https://opeservices.com.br/grafana
 - Metallb - https://medium.com/@shoaib_masood/metallb-network-loadbalancer-minikube-335d846dfdbe
 - NGINX - https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/
+        - https://linuxize.com/post/nginx-reverse-proxy/#common-nginx-reverse-proxy-options

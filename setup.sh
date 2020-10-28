@@ -23,19 +23,23 @@ kubectl apply -f ./srcs/metallb-config.yaml > /dev/null
 
 echo -e "Launching Pods ..."
 eval $(minikube docker-env)
-docker build srcs/nginx -t nginx-services > /dev/null
 docker build srcs/ftps -t ftps-services > /dev/null
 docker build srcs/wordpress -t wordpress-services > /dev/null && \
     docker build srcs/mysql -t mysql-services > /dev/null
 docker build srcs/php -t pma-services > /dev/null
-docker build srcs/grafana -t grafana-services > /dev/null && \
-    docker build srcs/influxdb -t influxdb-services > /dev/null
+# docker build srcs/grafana -t grafana-services > /dev/null && \
+#     docker build srcs/influxdb -t influxdb-services > /dev/null
 
 echo -e "Configure Minikube ..."
-kubectl apply -f ./srcs/nginx/nginx.yaml > /dev/null
 kubectl apply -f ./srcs/ftps/ftps.yaml > /dev/null
 kubectl apply -f ./srcs/mysql/mysql.yaml > /dev/null
 kubectl apply -f ./srcs/wordpress/wp.yaml > /dev/null
 kubectl apply -f ./srcs/php/php.yaml > /dev/null
-kubectl apply -f ./srcs/influxdb/influxdb.yaml > /dev/null
-kubectl apply -f ./srcs/grafana/grafana.yaml > /dev/null
+# kubectl apply -f ./srcs/influxdb/influxdb.yaml > /dev/null
+# kubectl apply -f ./srcs/grafana/grafana.yaml > /dev/null
+
+echo -e "Setting NGINX servers ..."
+SERVER_IP=`kubectl get svc phpmyadmin | grep 'phpmyadmin' | cut -d ' ' -f 10`
+sed -i -e 's@$(SERVER_IP)@'$SERVER_IP'@' ./srcs/nginx/nginx.conf
+docker build srcs/nginx -t nginx-services > /dev/null
+kubectl apply -f ./srcs/nginx/nginx.yaml > /dev/null
