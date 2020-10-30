@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 echo -e "Minikube Run ..."
 echo -e "Might take a while to install everything and get the cluster ready."
@@ -27,11 +27,11 @@ echo -e "Launching Pods ..."
 eval $(minikube docker-env)
 docker build srcs/nginx -t nginx-img
 docker build srcs/ftps -t ftps-img
-docker build srcs/wordpress -t wordpress-img && \
-    docker build srcs/mysql -t mysql-img
+docker build srcs/wordpress -t wordpress-img
+docker build srcs/mysql -t mysql-img
 docker build srcs/phpmyadmin -t phpmyadmin-img
-# docker build srcs/grafana -t grafana-img && \
-#     docker build srcs/influxdb -t influxdb-img
+# docker build srcs/grafana -t grafana-img
+# docker build srcs/influxdb -t influxdb-img
 
 echo -e "Configure Minikube ..."
 kubectl apply -f ./srcs/nginx/nginx.yaml

@@ -19,8 +19,6 @@ spec:
         image: ftps-img
         imagePullPolicy: Never
         ports:
-        - name: ftps-data
-          containerPort: 20
         - name: ftps-connection
           containerPort: 21
         - name: passv-mode
@@ -39,15 +37,11 @@ spec:
         volumeMounts:
         - name: ftps-config
           mountPath: /etc/vsftpd
-        - name: wordpress-persistent-storage
-          mountPath: /var/ftp
       volumes:
         - name: ftps-config
           configMap:
             name: ftps-config
-        - name: wordpress-persistent-storage
-          persistentVolumeClaim:
-            claimName: wordpress-pv-claim
+
 ---
 apiVersion: v1
 kind: Service
@@ -57,8 +51,6 @@ metadata:
   name: ftps
 spec:
   ports:
-  - name: ftps-data
-    port: 20
   - name: ftps-connection
     port: 21
   - name: passv-mode

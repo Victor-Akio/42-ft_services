@@ -2,16 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: phpmyadmin
-  labels:
-    app: phpmyadmin
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: phpmyadmin
-  strategy:
-    type: Recreate
   template:
     metadata:
+      name: phpmyadmin
       labels:
         app: phpmyadmin
     spec:
@@ -20,63 +18,39 @@ spec:
         image: phpmyadmin-img
         imagePullPolicy: Never
         ports:
-        - containerPort: 80
+        - containerPort: 5000
         volumeMounts:
-        - name: config-inc-php
-          mountPath: /var/www/phpmyadmin/config.inc.php
-          subPath: config.inc.php
-        - name: default-conf
-          mountPath: /etc/nginx/conf.d
-        - name: phpmyadmin-persistent-storage
-          mountPath: /var/www/
+          - name: default-conf
+            mountPath: /etc/nginx/conf.d
       volumes:
-      - name: config-inc-php
-        configMap:
-           name: phpmyadmin-config
-           items:
-           - key: config.inc.php
-             path: config.inc.php
       - name: default-conf
         configMap:
-           name: phpmyadmin-config
-           items:
-           - key: default.conf
-             path: default.conf
-      - name: phpmyadmin-persistent-storage
-        persistentVolumeClaim:
-          claimName: phpmyadmin-pv-claim
+            name: phpmyadmin-config
+            items:
+            - key: default.conf
+              path: default.conf
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: phpmyadmin
-  labels:
-    app: phpmyadmin
   annotations:
     metallb.universe.tf/allow-shared-ip: shared
+  name: phpmyadmin
 spec:
-  type: LoadBalancer
-  selector:
-    app: phpmyadmin
   ports:
-  - name: phpmyadmin
+  - name: http
     protocol: TCP
     port: 5000
-    targetPort: 80
+    targetPort: 5000
+  selector:
+    app: phpmyadmin
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: phpmyadmin-config
 data:
-  config.inc.php: |
-    <?php
-    declare(strict_types=1);
-    $i = 0;
-    $i++;
-    $cfg['Servers'][$i]['host'] = 'mysql';
-    $cfg['blowfish_secret'] = 'i0ULtq/xlL:x;F7AjIYH=2I82cI[Vrly';
-    $cfg['PmaAbsoluteUri'] = './';
   default.conf: |
     server {
       listen 80;
@@ -85,24 +59,4 @@ data:
       root /var/www/phpmyadmin;
       index index.php index.html;
       try_files $uri $uri/ =404;
-      location ~ \.php$ { 
-        fastcgi_pass 127.0.0.1:9000;
-        fastcgi_index index.php;
-        include fastcgi.conf;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-      }
     }
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: phpmyadmin-pv-claim
-  labels:
-    app: phpmyadmin
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
