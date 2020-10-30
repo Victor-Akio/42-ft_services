@@ -1,14 +1,12 @@
 #!/bin/sh
 
-PMA_PACKAGE=phpMyAdmin-$PMA_VERSION-all-languages.tar.gz
-
 if [[ ! -d /var/run/nginx ]]; then
 	mkdir -p /var/run/nginx
 fi
 
 if [[ ! -f /var/www/phpmyadmin/index.php ]]; then
 
-	curl -SL https://files.phpmyadmin.net/phpMyAdmin/$PMA_VERSION/phpMyAdmin-$PMA_VERSION-all-languages.tar.xz \
+	curl -SL https://files.phpmyadmin.net/phpMyAdmin/5.0.4/phpMyAdmin-5.0.4-all-languages.zip \
 	| tar -xJC /var/www/phpmyadmin --strip 1
 
 fi
