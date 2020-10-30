@@ -9,6 +9,6 @@ RUN apk upgrade && \
 COPY setup.sh /tmp/
 RUN chmod +x /tmp/setup.sh
 
-EXPOSE 21 31000
+EXPOSE 20 21 30000
 
 ENTRYPOINT ["/tmp/setup.sh"]

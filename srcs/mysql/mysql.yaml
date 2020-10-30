@@ -28,24 +28,30 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wp-mysql
+  name: mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wp-mysql
+      app: mysql
   template:
     metadata:
-      name: wp-mysql
+      name: mysql
       labels:
-        app: wp-mysql
+        app: mysql
     spec:
       securityContext:
         fsGroup: 101
       containers:
-      - name: wp-mysql
-        image: mysql-services
+      - name: mysql
+        image: mysql-img
         imagePullPolicy: Never
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
         ports:
         - name: http
           containerPort: 3306
@@ -60,11 +66,19 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: wp-mysql
+  name: mysql
 spec:
   ports:
   - port: 3306
     targetPort: http
   selector:
-    app: wp-mysql
+    app: mysql
   type: ClusterIP
+---
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: mysql-secret
+  type: Opaque
+  stringData:
+    password: admin
