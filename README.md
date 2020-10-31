@@ -17,7 +17,7 @@ Those were part of the requirements to deliver the project. They are not mandato
 ## Instructions
 
 ```
-Once the configuration is set, you can run [./setup] within the root of the repository.
+Once the configuration is set, you can run [./setup.sh] within the root of the repository.
 
 ````
 This will install every component of the cluster, which are divided in seven pods with diferent functions.
