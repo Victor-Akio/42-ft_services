@@ -1,4 +1,4 @@
-reset_nginx.sh
+./srcs/reset.sh
 
 # Prerequisites
 *.d
