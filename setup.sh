@@ -30,8 +30,8 @@ docker build srcs/ftps -t ftps-img
 docker build srcs/wordpress -t wordpress-img
 docker build srcs/mysql -t mysql-img
 docker build srcs/phpmyadmin -t phpmyadmin-img
-# docker build srcs/grafana -t grafana-img
-# docker build srcs/influxdb -t influxdb-img
+docker build srcs/grafana -t grafana-img
+docker build srcs/influxdb -t influxdb-img
 
 echo -e "Configure Minikube ..."
 kubectl apply -f ./srcs/nginx/nginx.yaml
@@ -39,5 +39,5 @@ kubectl apply -f ./srcs/ftps/ftps.yaml
 kubectl apply -f ./srcs/mysql/mysql.yaml
 kubectl apply -f ./srcs/wordpress/wordpress.yaml
 kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
-# kubectl apply -f ./srcs/influxdb/influxdb.yaml
-# kubectl apply -f ./srcs/grafana/grafana.yaml
+kubectl apply -f ./srcs/influxdb/influxdb.yaml
+kubectl apply -f ./srcs/grafana/grafana.yaml
